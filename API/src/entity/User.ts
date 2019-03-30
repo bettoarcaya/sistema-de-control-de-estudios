@@ -1,4 +1,5 @@
-import {Entity, PrimaryGeneratedColumn, Column} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn} from "typeorm";
+import {UserType} from "./userType";
 
 @Entity()
 export class User {
@@ -6,13 +7,17 @@ export class User {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
-    firstName: string;
+    @OneToOne(type => UserType)
+    @JoinColumn()
+    tipo: UserType;
 
-    @Column()
-    lastName: string;
+    @Column("text")
+    nombre: string;
 
-    @Column()
-    age: number;
+    @Column("text")
+    apellido: string;
+
+    @Column("text")
+    email: string;
 
 }
