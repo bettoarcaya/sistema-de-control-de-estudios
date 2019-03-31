@@ -18,16 +18,19 @@ export class UserController {
 
     async save(request: Request, response: Response, next: NextFunction) {
         
-        //let user = new User();
-        //user = request.body;
+        let user = new User();
+        user.nombre = request.body.nombre;
+        user.apellido = request.body.apellido;
+        user.email = request.body.email;
+        user.tipo = request.body.tipoId;
 
-        validate(request.body).then(errors => {
-            if(errors.length > 0){
-                return { "message": "validation error" };
-            }else{
-                return this.userRepository.save(request.body);
-            }
-        });
+        const errors = await validate(user);
+        
+        if(errors.length > 0){
+            return { "message": "validation error" };
+        }else{
+            return this.userRepository.save(request.body);
+        }
     }
 
     async remove(request: Request, response: Response, next: NextFunction) {
