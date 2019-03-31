@@ -2,6 +2,7 @@ import {getRepository} from "typeorm";
 import {NextFunction, Request, Response} from "express";
 import {User} from "../entity/User";
 import {UserType} from "../entity/userType";
+import { validate } from "class-validator";
 
 export class UserController {
 
@@ -16,7 +17,17 @@ export class UserController {
     }
 
     async save(request: Request, response: Response, next: NextFunction) {
-        return this.userRepository.save(request.body);
+        
+        //let user = new User();
+        //user = request.body;
+
+        validate(request.body).then(errors => {
+            if(errors.length > 0){
+                return { "message": "validation error" };
+            }else{
+                return this.userRepository.save(request.body);
+            }
+        });
     }
 
     async remove(request: Request, response: Response, next: NextFunction) {
