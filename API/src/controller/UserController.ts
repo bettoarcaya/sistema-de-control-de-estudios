@@ -33,7 +33,7 @@ export class UserController {
         if(errors.length > 0){
             return { "message": errors };
         }else{
-            return this.userRepository.save(request.body);
+            return this.userRepository.save(user);
         }
     }
 
