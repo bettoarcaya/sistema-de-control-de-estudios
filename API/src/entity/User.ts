@@ -12,15 +12,12 @@ export class User {
     @JoinColumn()
     tipo: UserType;
 
-    @IsEmpty()
     @Column("text")
     nombre: string;
 
-    @IsEmpty()
     @Column("text")
     apellido: string;
 
-    @IsEmpty()
     @IsEmail()
     @Column("text")
     email: string;

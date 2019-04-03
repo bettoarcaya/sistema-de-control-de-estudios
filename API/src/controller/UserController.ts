@@ -7,6 +7,7 @@ import { validate } from "class-validator";
 export class UserController {
 
     private userRepository = getRepository(User);
+    private userTypeRepository = getRepository(UserType);
 
     async all(request: Request, response: Response, next: NextFunction) {
         return this.userRepository.find();
@@ -18,16 +19,19 @@ export class UserController {
 
     async save(request: Request, response: Response, next: NextFunction) {
         
+        let type = new UserType();
+        type = await this.userTypeRepository.findOne(request.body.tipoId);
+        
         let user = new User();
         user.nombre = request.body.nombre;
         user.apellido = request.body.apellido;
         user.email = request.body.email;
-        user.tipo = request.body.tipoId;
+        user.tipo = type;
 
         const errors = await validate(user);
         
         if(errors.length > 0){
-            return { "message": "validation error" };
+            return { "message": errors };
         }else{
             return this.userRepository.save(request.body);
         }
