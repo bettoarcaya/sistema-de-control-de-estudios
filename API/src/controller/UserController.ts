@@ -3,6 +3,7 @@ import {NextFunction, Request, Response} from "express";
 import {User} from "../entity/User";
 import {UserType} from "../entity/userType";
 import { validate } from "class-validator";
+import { UserPost } from "../entity/validation/userValidate/userPost";
 
 export class UserController {
 
@@ -19,20 +20,28 @@ export class UserController {
 
     async save(request: Request, response: Response, next: NextFunction) {
         
-        let type = new UserType();
-        type = await this.userTypeRepository.findOne(request.body.tipoId);
+        let userValidate = new UserPost();
         
-        let user = new User();
-        user.nombre = request.body.nombre;
-        user.apellido = request.body.apellido;
-        user.email = request.body.email;
-        user.tipo = type;
-
-        const errors = await validate(user);
+        userValidate.nombre = request.body.nombre;
+        userValidate.apellido = request.body.apellido;
+        userValidate.email = request.body.email;
+        userValidate.tipo = request.body.tipo;
+        
+        const errors = await validate(userValidate);
         
         if(errors.length > 0){
             return { "message": errors };
         }else{
+            let type = new UserType();
+            let user = new User();
+
+            type = await this.userTypeRepository.findOne(request.body.tipoId);
+            
+            user.nombre = userValidate.nombre;
+            user.apellido = userValidate.apellido;
+            user.email = userValidate.email;
+            user.tipo = type;
+
             return this.userRepository.save(user);
         }
     }
