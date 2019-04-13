@@ -13,6 +13,9 @@ createConnection().then(async connection => {
 
     // create express app
     const app = express();
+
+    app.use(cors());
+    app.use(helmet());
     app.use(bodyParser.json());
 
     // register express routes from defined application routes
