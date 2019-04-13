@@ -2,6 +2,8 @@ import "reflect-metadata";
 import {createConnection} from "typeorm";
 import * as express from "express";
 import * as bodyParser from "body-parser";
+import * as helmet from "helmet";
+import * as cors from "cors";
 import {Request, Response} from "express";
 import {Routes} from "./routes";
 import {User} from "./entity/User";
