@@ -8,18 +8,18 @@ import { UserPut } from "../entity/validation/userValidate/userPut";
 
 export class UserController {
 
-    private userRepository = getRepository(User);
-    private userTypeRepository = getRepository(UserType);
+    static userRepository = getRepository(User);
+    static userTypeRepository = getRepository(UserType);
 
-    async all(request: Request, response: Response, next: NextFunction) {
+    static async all(request: Request, response: Response, next: NextFunction) {
         return this.userRepository.find();
     }
 
-    async one(request: Request, response: Response, next: NextFunction) {
+    static async one(request: Request, response: Response, next: NextFunction) {
         return this.userRepository.findOne(request.params.id);
     }
 
-    async save(request: Request, response: Response, next: NextFunction) {
+    static async save(request: Request, response: Response, next: NextFunction) {
         
         let userValidate = new UserPost();
         
@@ -47,12 +47,12 @@ export class UserController {
         }
     }
 
-    async remove(request: Request, response: Response, next: NextFunction) {
+    static async remove(request: Request, response: Response, next: NextFunction) {
         let userToRemove = await this.userRepository.findOne(request.params.id);
         await this.userRepository.remove(userToRemove);
     }
 
-    async update(request: Request, response: Response, next: NextFunction){
+    static async update(request: Request, response: Response, next: NextFunction){
         let userValidate = new UserPut();
 
         userValidate.nombre = request.body.nombre;
@@ -83,3 +83,5 @@ export class UserController {
     }
 
 }
+
+export default UserController;
