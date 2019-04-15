@@ -1,5 +1,11 @@
 import "reflect-metadata";
 import {createConnection} from "typeorm";
+import * as express from "express";
+import * as bodyParser from "body-parser";
+import * as helmet from "helmet";
+import * as cors from "cors";
+import {Request, Response} from "express";
+import routes from "./src/routes";
 
 createConnection({
     type: "mysql",
@@ -11,6 +17,4 @@ createConnection({
     entities: [],
     synchronize: true,
     logging: false
-}).then(connection => {
-    // here you can start to work with your entities
-}).catch(error => console.log(error));
+}).then().catch(error => console.log(error));

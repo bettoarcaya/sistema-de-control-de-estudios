@@ -5,9 +5,7 @@ import * as bodyParser from "body-parser";
 import * as helmet from "helmet";
 import * as cors from "cors";
 import {Request, Response} from "express";
-import {Routes} from "./routes";
-import {User} from "./entity/User";
-import{UserType} from './entity/userType';
+import routes from "./routes";
 
 createConnection().then(async connection => {
 
@@ -17,9 +15,10 @@ createConnection().then(async connection => {
     app.use(cors());
     app.use(helmet());
     app.use(bodyParser.json());
+    app.use("/", routes);
 
     // register express routes from defined application routes
-    Routes.forEach(route => {
+    /*Routes.forEach(route => {
         (app as any)[route.method](route.route, (req: Request, res: Response, next: Function) => {
             const result = (new (route.controller as any))[route.action](req, res, next);
             if (result instanceof Promise) {
@@ -29,7 +28,7 @@ createConnection().then(async connection => {
                 res.json(result);
             }
         });
-    });
+    });*/
 
     // setup express app here
     // ...
