@@ -17,7 +17,7 @@ import * as bcrypt from "bcryptjs";
     lastname: string;
 
     @Column()
-    @Length(4, 20)
+    @Length(4, 100)
     email: string;
   
     @Column()
