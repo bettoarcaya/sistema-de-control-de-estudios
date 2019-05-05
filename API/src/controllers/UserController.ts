@@ -28,7 +28,7 @@ static getOneById = async (req: Request, res: Response) => {
       select: ["id", "name", "lastname", "email", "role"] //We dont want to send the password on response
     });
   } catch (error) {
-    res.status(404).send("User not found");
+    res.status(404).send("Usuario no creado");
   }
 };
 
@@ -57,12 +57,12 @@ static newUser = async (req: Request, res: Response) => {
   try {
     await userRepository.save(user);
   } catch (e) {
-    res.status(409).send("username already in use");
+    res.status(409).send("Este email ya esta en uso");
     return;
   }
 
   //If all ok, send 201 response
-  res.status(201).send("User created");
+  res.status(201).send("Usuario creado");
 };
 
 static editUser = async (req: Request, res: Response) => {
@@ -79,7 +79,7 @@ static editUser = async (req: Request, res: Response) => {
     user = await userRepository.findOneOrFail(id);
   } catch (error) {
     //If not found, send a 404 response
-    res.status(404).send("User not found");
+    res.status(404).send("Usuario no encontrado");
     return;
   }
 
@@ -98,7 +98,7 @@ static editUser = async (req: Request, res: Response) => {
   try {
     await userRepository.save(user);
   } catch (e) {
-    res.status(409).send("email already in use");
+    res.status(409).send("Este email ya esta en uso");
     return;
   }
   //After all send a 204 (no content, but accepted) response
@@ -114,7 +114,7 @@ static deleteUser = async (req: Request, res: Response) => {
   try {
     user = await userRepository.findOneOrFail(id);
   } catch (error) {
-    res.status(404).send("User not found");
+    res.status(404).send("Usuario no encontrado");
     return;
   }
   userRepository.delete(id);
