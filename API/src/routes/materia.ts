@@ -18,4 +18,10 @@ router.get(
     MateriaController.getOneById
 );
 
+router.post(
+    "/",
+    [checkJwt, checkRole(["ADMIN"])],
+    MateriaController.addNewMateria
+);
+
 export default router;
