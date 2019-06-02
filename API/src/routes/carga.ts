@@ -6,4 +6,10 @@ import CargaController from "../controllers/CargaController";
 
 const router = Router();
 
+router.get(
+    "/:id([0-9]+)",
+    [checkJwt, checkRole(["ADMIN", "ESTUDIANTE"])],
+    CargaController.listarCargaPorUsuario
+);
+
 export default router;
