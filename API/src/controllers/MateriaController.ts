@@ -90,6 +90,23 @@ class MateriaController{
           res.status(200).send("Materia editada satisfactoriamente");
     }
 
+    static dellMateria  = async (req: Request, res: Response) => {
+
+        const id = req.params.id;
+        const materiaRepository = getRepository(Materia);
+        let materia: Materia;
+
+        try {
+            materia = await materiaRepository.findOneOrFail(id);
+        } catch (error) {
+            res.status(404).send("Materia no encontrado");
+            return;
+        }
+        materiaRepository.delete(id);
+
+        res.status(200).send("Materia eliminada satisfactoriamente");
+    }
+
 };
 
 export default MateriaController;
