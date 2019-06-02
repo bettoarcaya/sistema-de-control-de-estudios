@@ -26,4 +26,11 @@ router.post(
     MateriaController.addNewMateria
 );
 
+//Edit materia
+router.patch(
+    "/:id([0-9]+)",
+    [checkJwt, checkRole(["ADMIN"])],
+    MateriaController.editMateria
+  );
+
 export default router;
