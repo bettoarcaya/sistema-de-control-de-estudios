@@ -33,4 +33,11 @@ router.patch(
     MateriaController.editMateria
   );
 
+//Dell materia
+router.delete(
+    "/:id([0-9]+)",
+    [checkJwt, checkRole(["ADMIN"])],
+    MateriaController.dellMateria
+);
+
 export default router;
