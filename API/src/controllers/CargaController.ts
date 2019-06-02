@@ -9,7 +9,6 @@ class CargaController {
 
     static listarCargaPorUsuario = async (req: Request, res: Response) => {
         const id = req.params.id;
-        const userRepository = getRepository(User); 
         const cargaRepository = getRepository(Carga);
         let carga;
 
