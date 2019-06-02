@@ -14,7 +14,7 @@ class CargaController {
 
         try{
             //carga = await cargaRepository.findOneOrFail(id); 
-            carga = await cargaRepository.find({
+            carga = await cargaRepository.findOneOrFail({
                 where: { userId: id }
             }); 
          }catch (error){
