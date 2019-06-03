@@ -12,6 +12,8 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
+const baseAPI = "localhost:3000/";
+let state = { email: '', password: '' }
 
 const useStyles = makeStyles(theme => ({
     '@global': {
@@ -41,7 +43,12 @@ const useStyles = makeStyles(theme => ({
 
 function handleSubmit(event) {
     event.preventDefault();
-    
+    alert(state.email + " " + state.password);
+    /*const data = {
+      "email" : ,
+      "password" :  
+    }*/
+    //fetch(baseAPI + 'auth/login')
   }
   
 function App() {
