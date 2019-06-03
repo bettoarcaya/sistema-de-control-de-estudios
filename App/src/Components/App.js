@@ -24,6 +24,7 @@ const useStyles = makeStyles(theme => ({
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
+      background: "white"
     },
     avatar: {
       margin: theme.spacing(1),
@@ -38,16 +39,22 @@ const useStyles = makeStyles(theme => ({
     },
   }));
 
+function handleSubmit(event) {
+    event.preventDefault();
+    
+  }
+  
 function App() {
     const classes = useStyles();
 
+    
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
         </Avatar>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} type="POST" onSubmit={handleSubmit} noValidate>
           <TextField
             variant="outlined"
             margin="normal"
