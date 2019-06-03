@@ -47,9 +47,6 @@ function App() {
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
         </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign in
-        </Typography>
         <form className={classes.form} noValidate>
           <TextField
             variant="outlined"
@@ -57,7 +54,7 @@ function App() {
             required
             fullWidth
             id="email"
-            label="Email Address"
+            label="Email"
             name="email"
             autoComplete="email"
             autoFocus
@@ -68,7 +65,7 @@ function App() {
             required
             fullWidth
             name="password"
-            label="Password"
+            label="Contrasena"
             type="password"
             id="password"
             autoComplete="current-password"
@@ -84,17 +81,12 @@ function App() {
             color="primary"
             className={classes.submit}
           >
-            Sign In
+            Entrar
           </Button>
           <Grid container>
             <Grid item xs>
               <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
-            <Grid item>
-              <Link href="#" variant="body2">
-                {"Don't have an account? Sign Up"}
+                Olvidaste tu contrasena?
               </Link>
             </Grid>
           </Grid>
