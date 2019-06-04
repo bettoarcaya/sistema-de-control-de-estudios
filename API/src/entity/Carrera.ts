@@ -7,5 +7,8 @@ export class Carrera {
     id_carrera: number;
 
     @Column()
+    cod_carrera: number;
+
+    @Column()
     nombre_carrera: string;
 }
