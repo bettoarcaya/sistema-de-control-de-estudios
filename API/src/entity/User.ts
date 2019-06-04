@@ -6,15 +6,15 @@ import * as bcrypt from "bcryptjs";
   @Unique(["email"])
   export class User {
     @PrimaryGeneratedColumn()
-    id: number;
+    id_usuario: number;
   
     @Column()
     @Length(4, 20)
-    name: string;
+    nombre: string;
 
     @Column()
     @Length(4, 20)
-    lastname: string;
+    apellido: string;
 
     @Column()
     @Length(4, 100)
@@ -26,7 +26,7 @@ import * as bcrypt from "bcryptjs";
   
     @Column()
     @IsNotEmpty()
-    role: string;
+    tipo_usuario: string;
   
     @Column()
     @CreateDateColumn()

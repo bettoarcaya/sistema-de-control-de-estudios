@@ -10,7 +10,7 @@ static listAll = async (req: Request, res: Response) => {
   //Get users from database
   const userRepository = getRepository(User);
   const users = await userRepository.find({
-    select: ["id", "name", "lastname", "email", "role"] //We dont want to send the passwords on response
+    select: ["id_usuario", "nombre", "apellido", "email", "tipo_usuario"] //We dont want to send the passwords on response
   });
 
   //Send the users object
@@ -25,7 +25,7 @@ static getOneById = async (req: Request, res: Response) => {
   const userRepository = getRepository(User);
   try {
     const user = await userRepository.findOneOrFail(id, {
-      select: ["id", "name", "lastname", "email", "role"] //We dont want to send the password on response
+      select: ["id_usuario", "nombre", "apellido", "email", "tipo_usuario"] //We dont want to send the password on response
     });
   } catch (error) {
     res.status(404).send("Usuario no creado");
@@ -36,11 +36,11 @@ static newUser = async (req: Request, res: Response) => {
   //Get parameters from the body
   let { name, lastname, email, password, role } = req.body;
   let user = new User();
-  user.name = name;
-  user.lastname = lastname;
+  user.nombre = name;
+  user.apellido = lastname;
   user.email = email;
   user.password = password;
-  user.role = role;
+  user.tipo_usuario = role;
 
   //Validade if the parameters are ok
   const errors = await validate(user);
@@ -84,10 +84,10 @@ static editUser = async (req: Request, res: Response) => {
   }
 
   //Validate the new values on model
-  user.name = name;
-  user.lastname = lastname;
+  user.nombre = name;
+  user.apellido = lastname;
   user.email = email;
-  user.role = role;
+  user.tipo_usuario = role;
   const errors = await validate(user);
   if (errors.length > 0) {
     res.status(400).send(errors);
