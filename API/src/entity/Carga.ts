@@ -6,7 +6,7 @@ import { Materia } from "./Materia";
 export class Carga {
 
     @PrimaryGeneratedColumn()
-    id: number;
+    id_carga: number;
 
     @OneToOne(type => User)
     @JoinColumn()
