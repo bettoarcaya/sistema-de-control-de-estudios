@@ -10,6 +10,6 @@ export class Documento {
     nombre_documento: string;
 
     @Column()
-    valor_arancel: Double;
+    valor_arancel: number;
 
 }
