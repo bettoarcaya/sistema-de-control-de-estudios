@@ -5,12 +5,12 @@ export class CreateAdminUser1557071918282 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<any> {
         let user = new User();
-        user.name = "admin";
-        user.lastname = "admin";
+        user.nombre = "admin";
+        user.apellido = "admin";
         user.email = "admin@test.com";
         user.password = "test";
         user.hashPassword();
-        user.role = "ADMIN";
+        user.tipo_usuario = "ADMIN";
         const userRepository = getRepository(User);
         await userRepository.save(user);
     }

@@ -10,7 +10,7 @@ static listAll = async (req: Request, res: Response) => {
   //Get users from database
   const userRepository = getRepository(User);
   const users = await userRepository.find({
-    select: ["id_usuario", "nombre", "apellido", "email", "tipo_usuario"] //We dont want to send the passwords on response
+    select: ["id_usuario", "nombre", "apellido", "cedula", "email", "tipo_usuario"] //We dont want to send the passwords on response
   });
 
   //Send the users object
@@ -25,7 +25,7 @@ static getOneById = async (req: Request, res: Response) => {
   const userRepository = getRepository(User);
   try {
     const user = await userRepository.findOneOrFail(id, {
-      select: ["id_usuario", "nombre", "apellido", "email", "tipo_usuario"] //We dont want to send the password on response
+      select: ["id_usuario", "nombre", "apellido", "cedula", "email", "tipo_usuario"] //We dont want to send the password on response
     });
   } catch (error) {
     res.status(404).send("Usuario no creado");
@@ -34,10 +34,11 @@ static getOneById = async (req: Request, res: Response) => {
 
 static newUser = async (req: Request, res: Response) => {
   //Get parameters from the body
-  let { name, lastname, email, password, role } = req.body;
+  let { name, lastname, email, idNumber, password, role } = req.body;
   let user = new User();
   user.nombre = name;
   user.apellido = lastname;
+  user.cedula = idNumber;
   user.email = email;
   user.password = password;
   user.tipo_usuario = role;

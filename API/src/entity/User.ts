@@ -17,6 +17,9 @@ import * as bcrypt from "bcryptjs";
     apellido: string;
 
     @Column()
+    cedula: number;
+
+    @Column()
     @Length(4, 100)
     email: string;
   

@@ -23,8 +23,4 @@ export class Programacion {
     @JoinColumn()
     profesor: User;
 
-    @OneToOne(type => Historico)
-    @JoinColumn()
-    historico: Historico;
-
 }
