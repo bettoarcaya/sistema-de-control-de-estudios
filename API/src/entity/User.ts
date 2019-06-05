@@ -30,6 +30,9 @@ import * as bcrypt from "bcryptjs";
     @Column()
     @IsNotEmpty()
     tipo_usuario: string;
+
+    @Column()
+    estatus: string;
   
     @Column()
     @CreateDateColumn()

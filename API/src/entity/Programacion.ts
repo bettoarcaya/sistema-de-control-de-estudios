@@ -2,6 +2,7 @@ import {Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn} from "type
 import { User } from "./User";
 import { Historico } from "./Historico";
 import { Carrera } from "./Carrera";
+import { Pensum } from "./Pensum";
 
 @Entity()
 export class Programacion {
@@ -14,6 +15,10 @@ export class Programacion {
 
     @Column()
     seccion: number;
+
+    @OneToOne(type => Pensum, pemsun => pemsun.cod_materia)
+    @JoinColumn()
+    cod_materia: number;
 
     @OneToOne(type => Carrera)
     @JoinColumn()
