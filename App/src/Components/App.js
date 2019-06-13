@@ -13,7 +13,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import axios from 'axios';
 
-const baseAPI = "localhost:3000/";
+const baseAPI = "http://localhost:3000";
 let state = { email: '', password: '' }
 
 const useStyles = makeStyles(theme => ({
@@ -46,8 +46,23 @@ function handleSubmit(event) {
     event.preventDefault();
     state.email = event.target.email.value;
     state.password = event.target.password.value;
-    console.log(state.email, state.password);
+    //console.log(state.email, state.password);
     
+    axios.post(baseAPI + '/auth/login', {email: state.email, password: state.password})
+          .then(res => {
+              console.log("respuesta", res.json());
+              console.log(res.data);
+          });
+
+    /*fetch(baseAPI + '/auth/login', {
+      method: 'POST', // or 'PUT'
+      body: JSON.stringify(state), // data can be `string` or {object}!
+      headers:{
+        'Content-Type': 'application/json'
+      }
+    }).then(res => console.log(res))
+    .catch(error => console.error('Error:', error))
+    .then(response => console.log('Success:', response));*/
     
   }
   
