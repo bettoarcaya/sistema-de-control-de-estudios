@@ -50,7 +50,6 @@ function handleSubmit(event) {
     
     axios.post(baseAPI + '/auth/login', {email: state.email, password: state.password})
           .then(res => {
-              console.log("respuesta", res.json());
               console.log(res.data);
           });
 
