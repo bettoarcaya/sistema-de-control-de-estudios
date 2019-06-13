@@ -1,6 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, Unique, CreateDateColumn, UpdateDateColumn, OneToOne, JoinColumn } from "typeorm";
 import { User } from "./User";
 import { Programacion } from "./Programacion";
+import { Data_estudiantil } from "./Data_estudiantil";
 
 @Entity()
 export class Historico {
@@ -13,9 +14,9 @@ export class Historico {
     @JoinColumn()
     programacion: Programacion;
 
-    @OneToOne(type => User)
+    @OneToOne(type => Data_estudiantil)
     @JoinColumn()
-    estudiante: User;
+    dataEId: Data_estudiantil;
 
     @Column()
     nota: number;

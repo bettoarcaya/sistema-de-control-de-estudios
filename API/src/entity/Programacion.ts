@@ -3,6 +3,7 @@ import { User } from "./User";
 import { Historico } from "./Historico";
 import { Carrera } from "./Carrera";
 import { Pensum } from "./Pensum";
+import { Periodo } from "./Periodo";
 
 @Entity()
 export class Programacion {
@@ -10,8 +11,12 @@ export class Programacion {
     @PrimaryGeneratedColumn()
     id_programacion: number;
 
+    @OneToOne(type => Periodo)
+    @JoinColumn()
+    periodoId: Periodo;
+
     @Column()
-    semestre: string;
+    anio: string;
 
     @Column()
     seccion: number;
