@@ -11,6 +11,7 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import axios from 'axios';
 
 const baseAPI = "localhost:3000/";
 let state = { email: '', password: '' }
@@ -43,12 +44,11 @@ const useStyles = makeStyles(theme => ({
 
 function handleSubmit(event) {
     event.preventDefault();
-    alert(state.email + " " + state.password);
-    /*const data = {
-      "email" : ,
-      "password" :  
-    }*/
-    //fetch(baseAPI + 'auth/login')
+    state.email = event.target.email.value;
+    state.password = event.target.password.value;
+    console.log(state.email, state.password);
+    
+    
   }
   
 function App() {
