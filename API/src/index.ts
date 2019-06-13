@@ -13,11 +13,23 @@ createConnection().then(async connection => {
      
    const app = express();
 
+    var whitelist = ['http://localhost:3006']
+    var corsOptions = {
+      origin: function (origin, callback) {
+        if (whitelist.indexOf(origin) !== -1) {
+          callback(null, true)
+        } else {
+          callback(new Error('Not allowed by CORS'))
+        }
+      }
+    }
+
+
    // Call midlewares
-   app.use(cors());
+   app.use(cors(corsOptions));
    app.use(helmet());
    app.use(bodyParser.json());
-
+  
    //Set all routes from routes folder
    app.use("/", routes);
 
