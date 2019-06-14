@@ -12,9 +12,17 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import axios from 'axios';
+import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 
 const baseAPI = "http://localhost:3000";
-let state = { email: '', password: '' }
+let state = { 
+    email: '', 
+    password: '',
+  }
+let message = {
+    status: '',
+    msg: ''
+  }
 
 const useStyles = makeStyles(theme => ({
     '@global': {
@@ -51,6 +59,13 @@ function handleSubmit(event) {
     axios.post(baseAPI + '/auth/login', {email: state.email, password: state.password})
           .then(res => {
               console.log(res.data);
+              
+          })
+          .catch(error => {
+            console.error(error);
+            message.status = 'Error';
+            message.msg = "Usuario o contrasena incorrecta";
+            alert(message.status + "!" + " " + message.msg);
           });
 
     /*fetch(baseAPI + '/auth/login', {
@@ -75,7 +90,8 @@ function App() {
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
         </Avatar>
-        <form className={classes.form} type="POST" onSubmit={handleSubmit} noValidate>
+        <div>{message.msg}</div>
+        <ValidatorForm className={classes.form} type="POST" onSubmit={handleSubmit} noValidate>
           <TextField
             variant="outlined"
             margin="normal"
@@ -118,7 +134,7 @@ function App() {
               </Link>
             </Grid>
           </Grid>
-        </form>
+        </ValidatorForm>
       </div>
       <Box mt={5}>
       </Box>
