@@ -50,7 +50,11 @@ const useStyles = makeStyles(theme => ({
     },
   }));
 
-function handleSubmit(event) {
+  function handleChange(event){
+    state[event.target.id] = event.target.value;
+  }
+
+  function handleSubmit(event) {
     event.preventDefault();
     state.email = event.target.email.value;
     state.password = event.target.password.value;
@@ -67,17 +71,6 @@ function handleSubmit(event) {
             message.msg = "Usuario o contrasena incorrecta";
             alert(message.status + "!" + " " + message.msg);
           });
-
-    /*fetch(baseAPI + '/auth/login', {
-      method: 'POST', // or 'PUT'
-      body: JSON.stringify(state), // data can be `string` or {object}!
-      headers:{
-        'Content-Type': 'application/json'
-      }
-    }).then(res => console.log(res))
-    .catch(error => console.error('Error:', error))
-    .then(response => console.log('Success:', response));*/
-    
   }
   
 function App() {
@@ -101,6 +94,7 @@ function App() {
             label="Email"
             name="email"
             autoComplete="email"
+            onChange={handleChange}
             autoFocus
           />
           <TextField
@@ -112,6 +106,7 @@ function App() {
             label="Contrasena"
             type="password"
             id="password"
+            onChange={handleChange}
             autoComplete="current-password"
           />
           <FormControlLabel
