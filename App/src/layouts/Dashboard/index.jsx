@@ -4,6 +4,7 @@ import React, { Component, Fragment } from 'react';
 import classNames from 'classnames';
 import compose from 'recompose/compose';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 
 // Material helpers
 import { withStyles, withWidth } from '@material-ui/core';
@@ -25,11 +26,22 @@ class Dashboard extends Component {
       window.location="http://localhost:3006/sign-in";
     }
 
+    this.getInfo();
+
     const isMobile = ['xs', 'sm', 'md'].includes(props.width);
 
     this.state = {
       isOpen: !isMobile
     };
+  }
+
+  getInfo = async () => {
+    let res = await axios({ 
+        method: 'Get', 
+        url: 'http://localhost:3000/user/' + localStorage.getItem('u_id'), 
+        headers: {auth: localStorage.getItem('token')}
+    })
+    console.log("response", res);
   }
 
   handleClose = () => {

@@ -94,8 +94,6 @@ class SignIn extends Component {
       const { history } = this.props;
       const { values } = this.state;
 
-      console.log(this.props);
-
       this.setState({ isLoading: true });
 
       await signIn(values.email, values.password);
@@ -110,7 +108,8 @@ class SignIn extends Component {
         });
 
       localStorage.setItem('isAuthenticated', true);
-      localStorage.setItem('token', response.data);
+      localStorage.setItem('token', response.data.token );
+      localStorage.setItem('u_id', response.data.user_id );
 
       history.push('/dashboard');
     } catch (error) {
