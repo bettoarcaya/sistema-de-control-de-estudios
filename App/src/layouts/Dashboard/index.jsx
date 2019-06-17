@@ -21,6 +21,10 @@ class Dashboard extends Component {
   constructor(props) {
     super(props);
 
+    if(localStorage.getItem('isAuthenticated') === 'false'){
+      window.location="http://localhost:3006/sign-in";
+    }
+
     const isMobile = ['xs', 'sm', 'md'].includes(props.width);
 
     this.state = {
@@ -30,6 +34,7 @@ class Dashboard extends Component {
 
   handleClose = () => {
     this.setState({ isOpen: false });
+    localStorage.setItem('isAuthenticated', false);
   };
 
   handleToggleOpen = () => {

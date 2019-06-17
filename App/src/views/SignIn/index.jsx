@@ -35,27 +35,6 @@ import schema from './schema';
 
 // Service methods
 const signIn = (email, password) => {
-
-  /*let data = {
-    email: email,
-    password: password
-  }
-
-  return axios({ 
-    method: 'POST', 
-    url: 'http://localhost:3000/auth/login', 
-    headers: {autorizacion: localStorage.token}, 
-    data: { email: email,
-            password: password 
-          } 
-    }).then(function(response){
-      console.log(response.data);
-      console.log(response.status);
-    }).catch(function(error){
-      console.log(error);
-    });*/
-
-  
   return new Promise(resolve => {
     setTimeout(() => {
       resolve(true);
@@ -114,6 +93,8 @@ class SignIn extends Component {
     try {
       const { history } = this.props;
       const { values } = this.state;
+
+      console.log(this.props);
 
       this.setState({ isLoading: true });
 
