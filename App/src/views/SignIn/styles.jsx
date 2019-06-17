@@ -68,6 +68,7 @@ export default theme => ({
     paddingRight: '100px',
     paddingBottom: '125px',
     flexBasis: '700px',
+    marginLeft: '500px',
     [theme.breakpoints.down('sm')]: {
       paddingLeft: theme.spacing.unit * 2,
       paddingRight: theme.spacing.unit * 2

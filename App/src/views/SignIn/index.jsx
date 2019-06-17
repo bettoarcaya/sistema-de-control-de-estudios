@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import compose from 'recompose/compose';
 import validate from 'validate.js';
 import _ from 'underscore';
+import axios from 'axios';
 
 // Material helpers
 import { withStyles } from '@material-ui/core';
@@ -33,7 +34,28 @@ import styles from './styles';
 import schema from './schema';
 
 // Service methods
-const signIn = () => {
+const signIn = (email, password) => {
+
+  /*let data = {
+    email: email,
+    password: password
+  }
+
+  return axios({ 
+    method: 'POST', 
+    url: 'http://localhost:3000/auth/login', 
+    headers: {autorizacion: localStorage.token}, 
+    data: { email: email,
+            password: password 
+          } 
+    }).then(function(response){
+      console.log(response.data);
+      console.log(response.status);
+    }).catch(function(error){
+      console.log(error);
+    });*/
+
+  
   return new Promise(resolve => {
     setTimeout(() => {
       resolve(true);
@@ -97,7 +119,17 @@ class SignIn extends Component {
 
       await signIn(values.email, values.password);
 
+      const response = await axios({ 
+        method: 'POST', 
+        url: 'http://localhost:3000/auth/login', 
+        headers: {autorizacion: localStorage.token}, 
+        data: { email: values.email,
+                password: values.password 
+              } 
+        });
+
       localStorage.setItem('isAuthenticated', true);
+      localStorage.setItem('token', response.data);
 
       history.push('/dashboard');
     } catch (error) {
@@ -124,94 +156,18 @@ class SignIn extends Component {
 
     return (
       <div className={classes.root}>
-        <Grid
-          className={classes.grid}
-          container
-        >
-          <Grid
-            className={classes.quoteWrapper}
-            item
-            lg={5}
-          >
-            <div className={classes.quote}>
-              <div className={classes.quoteInner}>
-                <Typography
-                  className={classes.quoteText}
-                  variant="h1"
-                >
-                  Hella narwhal Cosby sweater McSweeney's, salvia kitsch before
-                  they sold out High Life.
-                </Typography>
-                <div className={classes.person}>
-                  <Typography
-                    className={classes.name}
-                    variant="body1"
-                  >
-                    Takamaru Ayako
-                  </Typography>
-                  <Typography
-                    className={classes.bio}
-                    variant="body2"
-                  >
-                    Manager at inVision
-                  </Typography>
-                </div>
-              </div>
-            </div>
-          </Grid>
-          <Grid
-            className={classes.content}
-            item
-            lg={7}
-            xs={12}
-          >
+        
+          
+          
             <div className={classes.content}>
-              <div className={classes.contentHeader}>
-                <IconButton
-                  className={classes.backButton}
-                  onClick={this.handleBack}
-                >
-                  <ArrowBackIcon />
-                </IconButton>
-              </div>
+              
               <div className={classes.contentBody}>
                 <form className={classes.form}>
                   <Typography
                     className={classes.title}
                     variant="h2"
                   >
-                    Sign in
-                  </Typography>
-                  <Typography
-                    className={classes.subtitle}
-                    variant="body1"
-                  >
-                    Sign in with social media
-                  </Typography>
-                  <Button
-                    className={classes.facebookButton}
-                    color="primary"
-                    onClick={this.handleSignIn}
-                    size="large"
-                    variant="contained"
-                  >
-                    <FacebookIcon className={classes.facebookIcon} />
-                    Login with Facebook
-                  </Button>
-                  <Button
-                    className={classes.googleButton}
-                    onClick={this.handleSignIn}
-                    size="large"
-                    variant="contained"
-                  >
-                    <GoogleIcon className={classes.googleIcon} />
-                    Login with Google
-                  </Button>
-                  <Typography
-                    className={classes.sugestion}
-                    variant="body1"
-                  >
-                    or login with email address
+                    Iniciar Session
                   </Typography>
                   <div className={classes.fields}>
                     <TextField
@@ -272,26 +228,12 @@ class SignIn extends Component {
                       size="large"
                       variant="contained"
                     >
-                      Sign in now
+                      Entrar
                     </Button>
                   )}
-                  <Typography
-                    className={classes.signUp}
-                    variant="body1"
-                  >
-                    Don't have an account?{' '}
-                    <Link
-                      className={classes.signUpUrl}
-                      to="/sign-up"
-                    >
-                      Sign up
-                    </Link>
-                  </Typography>
                 </form>
               </div>
             </div>
-          </Grid>
-        </Grid>
       </div>
     );
   }

@@ -49,11 +49,6 @@ class Sidebar extends Component {
             className={classes.logoLink}
             to="/"
           >
-            <img
-              alt="Brainalytica logo"
-              className={classes.logoImage}
-              src="/images/logos/brainalytica_logo.svg"
-            />
           </Link>
         </div>
         <Divider className={classes.logoDivider} />
@@ -62,7 +57,7 @@ class Sidebar extends Component {
             <Avatar
               alt="Roman Kutepov"
               className={classes.avatar}
-              src="/images/avatars/avatar_1.png"
+              src=""
             />
           </Link>
           <Typography

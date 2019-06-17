@@ -13,7 +13,7 @@ createConnection().then(async connection => {
      
    const app = express();
 
-    var whitelist = ['http://localhost:3006']
+    var whitelist = ['http://localhost:3006/']
     var corsOptions = {
       origin: function (origin, callback) {
         if (whitelist.indexOf(origin) !== -1) {
@@ -26,7 +26,7 @@ createConnection().then(async connection => {
 
 
    // Call midlewares
-   app.use(cors(corsOptions));
+   app.use(cors());
    app.use(helmet());
    app.use(bodyParser.json());
   
