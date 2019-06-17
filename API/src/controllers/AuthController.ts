@@ -37,7 +37,10 @@ class AuthController {
     );
 
     //Send the jwt in the response
-    res.send(token);
+    res.send({
+      token: token,
+      user_id: user.id_usuario
+    });
   };
 
   static changePassword = async (req: Request, res: Response) => {
