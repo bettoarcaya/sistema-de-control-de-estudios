@@ -11,7 +11,7 @@ import { Router } from "express";
   // Get one user
   router.get(
     "/:id([0-9]+)",
-    [checkJwt, checkRole(["ADMIN"])],
+    [checkJwt, checkRole(["ADMIN", "ESTUDIANTE"])],
     UserController.getOneById
   );
 
