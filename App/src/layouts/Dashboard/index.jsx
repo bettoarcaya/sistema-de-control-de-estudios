@@ -25,7 +25,7 @@ class Dashboard extends Component {
     if(localStorage.getItem('isAuthenticated') === 'false'){
       window.location="http://localhost:3006/sign-in";
     }
-
+    console.log(this.props);
     this.getInfo();
 
     const isMobile = ['xs', 'sm', 'md'].includes(props.width);
