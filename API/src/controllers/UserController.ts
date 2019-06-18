@@ -27,6 +27,7 @@ static getOneById = async (req: Request, res: Response) => {
     const user = await userRepository.findOneOrFail(id, {
       select: ["id_usuario", "nombre", "apellido", "cedula", "email", "tipo_usuario"] //We dont want to send the password on response
     });
+    res.send(user);
   } catch (error) {
     res.status(404).send("Usuario no creado");
   }
