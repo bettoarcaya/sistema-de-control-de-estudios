@@ -36,12 +36,16 @@ class Dashboard extends Component {
   }
 
   getInfo = async () => {
-    let res = await axios({ 
+    try{
+      let res = await axios({ 
         method: 'Get', 
         url: 'http://localhost:3000/user/' + localStorage.getItem('u_id'), 
         headers: {auth: localStorage.getItem('token')}
-    })
-    console.log("response", res);
+      })
+      console.log("response", res.data);
+    }catch(error){
+      console.log("error: " + error);
+    }
   }
 
   handleClose = () => {
