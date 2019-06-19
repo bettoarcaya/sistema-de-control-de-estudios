@@ -38,8 +38,9 @@ import styles from './styles';
 
 class Sidebar extends Component {
   render() {
-    const { classes, className } = this.props;
 
+    const { classes, className, tipoUsuario, nombreUsuario, apellidoUsuario } = this.props;
+    
     const rootClassName = classNames(classes.root, className);
 
     return (
@@ -64,13 +65,13 @@ class Sidebar extends Component {
             className={classes.nameText}
             variant="h6"
           >
-            Roman Kutepov
+            {nombreUsuario}
           </Typography>
           <Typography
             className={classes.bioText}
             variant="caption"
           >
-            Brain Director
+            {tipoUsuario}
           </Typography>
         </div>
         <Divider className={classes.profileDivider} />

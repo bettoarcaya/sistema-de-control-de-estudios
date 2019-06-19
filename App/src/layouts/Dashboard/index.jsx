@@ -31,7 +31,11 @@ class Dashboard extends Component {
     const isMobile = ['xs', 'sm', 'md'].includes(props.width);
 
     this.state = {
-      isOpen: !isMobile
+      isOpen: !isMobile,
+      tipo_usuario: '',
+      nombre: '',
+      apellido: ''
+
     };
   }
 
@@ -43,9 +47,15 @@ class Dashboard extends Component {
         headers: {auth: localStorage.getItem('token')}
       })
       console.log("response", res.data);
+      this.state.tipo_usuario = res.data.tipo_usuario;
+      this.state.nombre = res.data.nombre + " " + res.data.apellido;
+      this.state.apellido = res.data.apellido;
+
     }catch(error){
       console.log("error: " + error);
     }
+
+    console.log(this.state);
   }
 
   handleClose = () => {
@@ -62,6 +72,9 @@ class Dashboard extends Component {
   render() {
     const { classes, width, title, children } = this.props;
     const { isOpen } = this.state;
+    const { tipo_usuario } = this.state;
+    const { nombre } = this.state;
+    const { apellido } = this.state;
 
     const isMobile = ['xs', 'sm', 'md'].includes(width);
     const shiftTopbar = isOpen && !isMobile;
@@ -84,7 +97,12 @@ class Dashboard extends Component {
           open={isOpen}
           variant={isMobile ? 'temporary' : 'persistent'}
         >
-          <Sidebar className={classes.sidebar} />
+          <Sidebar 
+            className={classes.sidebar}
+            tipoUsuario={tipo_usuario}
+            nombreUsuario={nombre}
+            apellidoUsuario={apellido} 
+          />
         </Drawer>
         <main
           className={classNames(classes.content, {
