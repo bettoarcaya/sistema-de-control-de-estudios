@@ -1,9 +1,10 @@
-import {Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn, ManyToOne} from "typeorm";
 import { User } from "./User";
 import { Historico } from "./Historico";
 import { Carrera } from "./Carrera";
 import { Pensum } from "./Pensum";
 import { Periodo } from "./Periodo";
+import { Data_estudiantil } from "./Data_estudiantil";
 
 @Entity()
 export class Programacion {
@@ -13,7 +14,7 @@ export class Programacion {
 
     @OneToOne(type => Periodo)
     @JoinColumn()
-    periodoId: Periodo;
+    periodoId;
 
     @Column()
     anio: string;
@@ -32,5 +33,8 @@ export class Programacion {
     @OneToOne(type => User)
     @JoinColumn()
     profesor: User;
+
+    @ManyToOne(type => Data_estudiantil)
+    estudiante: Data_estudiantil;
 
 }

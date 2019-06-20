@@ -15,6 +15,12 @@ import { Router } from "express";
     UserController.getOneById
   );
 
+  router.get(
+    "/carga/:id([0-9]+)",
+    [checkJwt, checkRole(["ESTUDIANTE"])],
+    UserController.getCargaById
+  );
+
   //Create a new user
   router.post("/", [checkJwt, checkRole(["ADMIN"])], UserController.newUser);
 
