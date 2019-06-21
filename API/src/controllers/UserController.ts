@@ -137,7 +137,8 @@ class UserController{
       const dataE = await dataERepository.find({where: { 	usuarioIdIdUsuario: id }});
       
       const carga = await cargaRepository.findOneOrFail({ 
-        where: { estudianteIdDataEstudiantil:  dataE } 
+        where: { estudianteIdDataEstudiantil:  dataE },
+        
       });
       //const carga = await cargaRepository.findOneOrFail(1);
       res.send(carga);

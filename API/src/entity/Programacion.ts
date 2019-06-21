@@ -1,4 +1,4 @@
-import {Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn, ManyToOne} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn, ManyToOne, OneToMany} from "typeorm";
 import { User } from "./User";
 import { Historico } from "./Historico";
 import { Carrera } from "./Carrera";
@@ -12,9 +12,8 @@ export class Programacion {
     @PrimaryGeneratedColumn()
     id_programacion: number;
 
-    @OneToOne(type => Periodo)
-    @JoinColumn()
-    periodoId;
+    @ManyToOne(type => Periodo, periodo => periodo.periodo)
+    periodo: Periodo;
 
     @Column()
     anio: string;

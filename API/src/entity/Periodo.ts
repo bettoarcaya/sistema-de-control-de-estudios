@@ -1,4 +1,5 @@
-import {Entity, PrimaryGeneratedColumn, Column} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, ManyToMany, ManyToOne, OneToMany} from "typeorm";
+import { Programacion } from "./Programacion";
 
 @Entity()
 export class Periodo {
@@ -8,4 +9,7 @@ export class Periodo {
 
     @Column()
     nombre: string;
+
+    @OneToMany(type => Programacion, programacion => programacion.periodo)
+    periodo: Periodo;
 }
