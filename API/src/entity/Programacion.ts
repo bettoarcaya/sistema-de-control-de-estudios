@@ -25,7 +25,10 @@ export class Programacion {
     seccion: number;
 
     @Column()
-    en_curso: boolean;
+    estatus: string;
+
+    @Column()
+    nota: number;
 
     @ManyToOne(type => Carrera, carrera => carrera.carrera)
     carrera: Carrera;

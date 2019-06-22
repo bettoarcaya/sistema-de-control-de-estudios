@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { getRepository } from "typeorm";
+import { getRepository, getConnection } from "typeorm";
 import { validate } from "class-validator";
 
 import { User } from "../entity/User";
@@ -134,7 +134,7 @@ class UserController{
     
     try {
       const carga = await cargaRepository.find({ 
-        where: { estudiante:  id, en_curso: 1 },
+        where: { estudiante:  id, estatus: "ENCURSO" },
         relations: ["periodo", "codigo_materia", "carrera", "profesor", "estudiante"],
       });
       
@@ -147,6 +147,23 @@ class UserController{
   static getHistorialById = async (req: Request, res: Response) => {
     const id: number = req.params.id;
     const histRepository = getRepository(Historico);
+
+    try{
+      const historial = await histRepository.find({
+        where: [{
+          estudiante: id,
+          estatus: "APROBADA"
+        },{
+          estudiante: id,
+          estatus: "REPROBADA"
+        }],
+        relations: ["periodo", "codigo_materia", "carrera", "profesor", "estudiante"],
+      });
+
+      res.status(200).send(historial);
+    }catch(error){
+      res.status(404).send("este usuario aun no tiene historial academico");
+    }
   };
 };
 
