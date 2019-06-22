@@ -1,4 +1,5 @@
-import {Entity, PrimaryGeneratedColumn, Column, Double} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, Double, OneToMany} from "typeorm";
+import { Historial_documento } from "./Historial_documento";
 
 @Entity()
 export class Documento {
@@ -11,5 +12,8 @@ export class Documento {
 
     @Column()
     valor_arancel: number;
+
+    @OneToMany(type => Historial_documento, hist_doc => hist_doc.documento)
+    doc_id: Documento;
 
 }

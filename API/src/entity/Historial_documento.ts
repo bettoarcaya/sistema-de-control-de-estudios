@@ -1,4 +1,4 @@
-import {Entity, PrimaryGeneratedColumn, OneToOne, JoinColumn, Column} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, OneToOne, JoinColumn, Column, OneToMany, ManyToOne} from "typeorm";
 import { Documento } from "./Documento";
 import { User } from "./User";
 
@@ -8,13 +8,19 @@ export class Historial_documento {
     @PrimaryGeneratedColumn()
     id_historial_documento
 
-    @OneToOne(type => Documento)
+    /*@OneToOne(type => Documento)
     @JoinColumn()
+    documento: Documento;*/
+
+    @ManyToOne(type => Documento, doc => doc.doc_id)
     documento: Documento;
 
-    @OneToOne(type => User)
+    /*@OneToOne(type => User)
     @JoinColumn()
-    usuario: User;
+    usuario: User;*/
+
+    @ManyToOne(type => User, user => user.user_id)
+    solicitante: User;
 
     @Column()
     estatus_documento: string;

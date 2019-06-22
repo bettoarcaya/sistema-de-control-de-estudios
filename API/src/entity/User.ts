@@ -2,6 +2,8 @@ import { Entity, PrimaryGeneratedColumn, Column, Unique, CreateDateColumn, Updat
 import { Length, IsNotEmpty } from "class-validator";
 import * as bcrypt from "bcryptjs";
 import { Programacion } from "./Programacion";
+import { Data_estudiantil } from "./Data_estudiantil";
+import { Historial_documento } from "./Historial_documento";
   
   @Entity()
   @Unique(["email"])
@@ -48,6 +50,12 @@ import { Programacion } from "./Programacion";
 
     @OneToMany(type => Programacion, prog => prog.estudiante)
     estudiante_id: User;
+
+    @OneToMany(type => Data_estudiantil, dataE => dataE.estudiante_id)
+    estudianteId: User;
+
+    @OneToMany(type => Historial_documento, hist_doc => hist_doc.solicitante)
+    user_id: User;
   
     hashPassword() {
       this.password = bcrypt.hashSync(this.password, 8);

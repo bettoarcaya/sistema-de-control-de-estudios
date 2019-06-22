@@ -24,6 +24,9 @@ export class Programacion {
     @Column()
     seccion: number;
 
+    @Column()
+    en_curso: boolean;
+
     @ManyToOne(type => Carrera, carrera => carrera.carrera)
     carrera: Carrera;
 
@@ -33,7 +36,7 @@ export class Programacion {
     @ManyToOne(type => User, user => user.estudiante_id)
     estudiante: User;
 
-    /*@ManyToOne(type => Data_estudiantil, estud => estud.estudiante_id)
-    estudiante: Data_estudiantil;*/
+    @OneToMany(type => Historico, hist => hist.programacion)
+    prog_id: Programacion;
 
 }

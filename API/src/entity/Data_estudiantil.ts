@@ -1,4 +1,4 @@
-import {Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn, OneToMany} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn, OneToMany, ManyToOne} from "typeorm";
 import { User } from "./User";
 import { Carrera } from "./Carrera";
 import { Programacion } from "./Programacion";
@@ -9,15 +9,14 @@ export class Data_estudiantil {
     @PrimaryGeneratedColumn()
     id_data_estudiantil: number;
 
-    @OneToOne(type => User)
-    @JoinColumn()
-    usuarioId: User; 
+    //@OneToOne(type => User)
+    //usuarioId: User; 
 
-    @OneToOne(type => Carrera)
-    @JoinColumn()
+    @ManyToOne(type => User, user => user.estudianteId)
+    estudiante_id: User;
+
+    //@OneToOne(type => Carrera)
+    @ManyToOne(type => Carrera, carrera => carrera.cod__carrera)
     carreraId: Carrera;
-
-    /*@OneToMany(type => Programacion, prog => prog.estudiante)
-    estudiante_id: Data_estudiantil;*/
 
 }
