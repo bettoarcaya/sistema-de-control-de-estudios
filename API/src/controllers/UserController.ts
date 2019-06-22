@@ -138,7 +138,7 @@ class UserController{
       
       const carga = await cargaRepository.findOneOrFail({ 
         where: { estudianteIdDataEstudiantil:  dataE },
-        relations: ["periodo"]
+        relations: ["periodo", "codigo_materia", "carrera", "profesor", "estudiante"]
       });
       //const carga = await cargaRepository.findOneOrFail(1);
       res.send(carga);

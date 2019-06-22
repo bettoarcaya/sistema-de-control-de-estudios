@@ -1,4 +1,4 @@
-import {Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn, ManyToOne, OneToMany} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn, ManyToOne, OneToMany, ManyToMany} from "typeorm";
 import { User } from "./User";
 import { Historico } from "./Historico";
 import { Carrera } from "./Carrera";
@@ -18,22 +18,22 @@ export class Programacion {
     @Column()
     anio: string;
 
+    @ManyToOne(type => Pensum, pensum => pensum.codigo_materia)
+    codigo_materia: Pensum;
+
     @Column()
     seccion: number;
 
-    @OneToOne(type => Pensum, pemsun => pemsun.cod_materia)
-    @JoinColumn()
-    cod_materia: number;
-
-    @OneToOne(type => Carrera)
-    @JoinColumn()
+    @ManyToOne(type => Carrera, carrera => carrera.carrera)
     carrera: Carrera;
 
-    @OneToOne(type => User)
-    @JoinColumn()
+    @ManyToOne(type => User, user => user.prof_id)
     profesor: User;
 
-    @ManyToOne(type => Data_estudiantil)
-    estudiante: Data_estudiantil;
+    @ManyToOne(type => User, user => user.estudiante_id)
+    estudiante: User;
+
+    /*@ManyToOne(type => Data_estudiantil, estud => estud.estudiante_id)
+    estudiante: Data_estudiantil;*/
 
 }

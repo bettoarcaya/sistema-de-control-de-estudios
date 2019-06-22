@@ -1,6 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column, Unique, CreateDateColumn, UpdateDateColumn } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, Unique, CreateDateColumn, UpdateDateColumn, OneToMany } from "typeorm";
 import { Length, IsNotEmpty } from "class-validator";
 import * as bcrypt from "bcryptjs";
+import { Programacion } from "./Programacion";
   
   @Entity()
   @Unique(["email"])
@@ -41,6 +42,12 @@ import * as bcrypt from "bcryptjs";
     @Column()
     @UpdateDateColumn()
     updatedAt: Date;
+
+    @OneToMany(type => Programacion, prog => prog.profesor)
+    prof_id: User;
+
+    @OneToMany(type => Programacion, prog => prog.estudiante)
+    estudiante_id: User;
   
     hashPassword() {
       this.password = bcrypt.hashSync(this.password, 8);
