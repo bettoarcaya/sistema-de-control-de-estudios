@@ -134,13 +134,13 @@ class UserController{
     const userRepository = getRepository(User);
 
     try {
-      const dataE = await dataERepository.find({where: { 	usuarioIdIdUsuario: id }});
+      //const dataE = await dataERepository.find({where: { 	usuarioIdIdUsuario: id }});
       
-      const carga = await cargaRepository.findOneOrFail({ 
-        where: { estudianteIdDataEstudiantil:  dataE },
-        relations: ["periodo", "codigo_materia", "carrera", "profesor", "estudiante"]
+      const carga = await cargaRepository.find({ 
+        where: { estudiante:  id },
+        relations: ["periodo", "codigo_materia", "carrera", "profesor", "estudiante"],
       });
-      //const carga = await cargaRepository.findOneOrFail(1);
+      
       res.send(carga);
     } catch (error) {
       res.status(404).send("Este usuario no tiene carga aun");
