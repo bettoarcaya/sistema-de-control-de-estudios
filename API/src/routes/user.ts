@@ -15,10 +15,18 @@ import { Router } from "express";
     UserController.getOneById
   );
 
+  //obtener la carga actual del estudiante
   router.get(
     "/carga/:id([0-9]+)",
     [checkJwt, checkRole(["ESTUDIANTE"])],
     UserController.getCargaById
+  );
+
+  //obtener el historial del estudiante
+  router.get(
+    "/historico/:id([0-9]+)",
+    [checkJwt, checkRole(["ESTUDIANTE"])],
+    UserController.getHistorialById
   );
 
   //Create a new user

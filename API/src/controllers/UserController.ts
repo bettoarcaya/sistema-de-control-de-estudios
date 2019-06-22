@@ -5,6 +5,7 @@ import { validate } from "class-validator";
 import { User } from "../entity/User";
 import { Programacion } from "../entity/Programacion";
 import { Data_estudiantil } from "../entity/Data_estudiantil";
+import { Historico } from "../entity/Historico";
 
 class UserController{
 
@@ -129,15 +130,11 @@ class UserController{
 
   static getCargaById = async (req: Request, res: Response) => {
     const id: number = req.params.id;
-    const dataERepository = getRepository(Data_estudiantil);
     const cargaRepository = getRepository(Programacion);
-    const userRepository = getRepository(User);
-
+    
     try {
-      //const dataE = await dataERepository.find({where: { 	usuarioIdIdUsuario: id }});
-      
       const carga = await cargaRepository.find({ 
-        where: { estudiante:  id },
+        where: { estudiante:  id, en_curso: 1 },
         relations: ["periodo", "codigo_materia", "carrera", "profesor", "estudiante"],
       });
       
@@ -145,6 +142,11 @@ class UserController{
     } catch (error) {
       res.status(404).send("Este usuario no tiene carga aun");
     }
+  };
+
+  static getHistorialById = async (req: Request, res: Response) => {
+    const id: number = req.params.id;
+    const histRepository = getRepository(Historico);
   };
 };
 
