@@ -141,7 +141,7 @@ class UserController{
         relations: ["periodo", "codigo_materia", "carrera", "profesor", "estudiante"],
       });
       
-      res.send(carga);
+      res.status(200).send(carga);
     } catch (error) {
       res.status(404).send("Este usuario no tiene carga aun");
     }
