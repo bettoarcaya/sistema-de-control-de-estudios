@@ -146,10 +146,12 @@ class UserController{
 
   static getHistorialById = async (req: Request, res: Response) => {
     const id: number = req.params.id;
-    const histRepository = getRepository(Historico);
+    const histRepository = getRepository(Programacion);
 
     try{
       const historial = await histRepository.find({
+
+        relations: ["periodo", "codigo_materia", "carrera", "profesor", "estudiante"],
         where: [{
           estudiante: id,
           estatus: "APROBADA"
@@ -157,12 +159,11 @@ class UserController{
           estudiante: id,
           estatus: "REPROBADA"
         }],
-        relations: ["periodo", "codigo_materia", "carrera", "profesor", "estudiante"],
       });
 
       res.status(200).send(historial);
     }catch(error){
-      res.status(404).send("este usuario aun no tiene historial academico");
+      res.status(404).send("Este usuario no tiene historial aun");
     }
   };
 };
