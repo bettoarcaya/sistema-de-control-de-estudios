@@ -184,14 +184,26 @@ class UserList extends Component {
     );
   }
 
-  renderCarga() {
+   renderCarga(){
     const { classes } = this.props;
     const { isLoading, users, error } = this.state;
     let materias = [];
 
-    if(localStorage.getItem('u_id') == '2'){
-      materias = this.state.carga;
+    try{
+      const response = axios({ 
+        method: 'Get', 
+        url: 'http://localhost:3000/user/carga/' + localStorage.getItem('u_id'), 
+        headers: {auth: localStorage.getItem('token')}
+      }).then(res => {
+        materias = res.data;
+      });
+    }catch(error){
+      console.log(error);
     }
+
+    /*if(localStorage.getItem('u_id') == '2'){
+      materias = this.state.carga;
+    }*/
 
     if (isLoading) {
       return (
