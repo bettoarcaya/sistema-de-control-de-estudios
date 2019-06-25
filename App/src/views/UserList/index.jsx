@@ -23,6 +23,20 @@ import { UsersToolbar, UsersTable } from './components';
 import styles from './style';
 import { async } from 'q';
 
+import { Link } from 'react-router-dom';
+
+// Material components
+import {
+  Avatar,
+  Checkbox,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  TablePagination
+} from '@material-ui/core';
+
 class UserList extends Component {
   signal = true;
 
@@ -30,88 +44,50 @@ class UserList extends Component {
     isLoading: false,
     limit: 10,
     users: [],
+    carga: [],
     selectedUsers: [],
     error: null,
-    carga: [
-      {
-      nombre: 'Matematica I',
-      codigo: '1234567',
-      estado: 'cursando',
-      carrera: 'ing en computacion',
-      nota: '--'
-      },
-      {
-        nombre: 'Programacion orientada a objetos',
-        codigo: '0726789',
-        estado: 'cursando',
-        carrera: 'ing en computacion',
-        nota: '--'
-      },
-      {
-        nombre: 'automata',
-        codigo: '0729876',
-        estado: 'cursando',
-        carrera: 'ing en computacion',
-        nota: '--'
-      }
-    ],
-    historial: [
-      {
-      nombre: 'economia',
-      codigo: '1234567',
-      estado: 'aprobada',
-      carrera: 'ing en computacion',
-      nota: '7'
-      },
-      {
-        nombre: 'abstraccion de datos',
-        codigo: '0726789',
-        estado: 'reprobada',
-        carrera: 'ing en computacion',
-        nota: '4'
-      },
-      {
-        nombre: 'introduccion a la ing en computacion',
-        codigo: '0729876',
-        estado: 'aprobada',
-        carrera: 'ing en computacion',
-        nota: '6'
-      }
-    ],
+    historial: [],
   };
 
-  /*carga = [
-    {
-    nombre: 'Matematica I',
-    codigo: '1234567',
-    estado: 'cursando',
-    carrera: 'ing en computacion',
-    nota: '--'
-    },
-    {
-      nombre: 'Programacion orientada a objetos',
-      codigo: '0726789',
-      estado: 'cursando',
-      carrera: 'ing en computacion',
-      nota: '--'
-    },
-    {
-      nombre: 'automata',
-      codigo: '0729876',
-      estado: 'cursando',
-      carrera: 'ing en computacion',
-      nota: '--'
-    }
-  ];*/
+  constructor(props){
+    super(props);
 
-  getCarga = async() => {
-    const carga = await axios({ 
+    //this.getCarga(); 
+  }
+
+ async gethistorial(){
+
+  try {
+    this.setState({ isLoading: true });
+
+    const { limit } = this.state;
+
+    const { users } = await getUsers(limit);
+
+    let historiales = await axios({ 
       method: 'Get', 
-      url: 'http://localhost:3000/user/carga/' + localStorage.getItem('u_id'), 
-      headers: {auth: localStorage.getItem('token')} 
+      url: 'http://localhost:3000/user/historico/' + localStorage.getItem('u_id'), 
+      headers: {auth: localStorage.getItem('token')}
     });
 
-    console.log("carga", carga);
+    let historial = historiales.data;   
+
+    if (this.signal) {
+      this.setState({
+        isLoading: false,
+        users,
+        historial
+      });
+    }
+  } catch (error) {
+    if (this.signal) {
+      this.setState({
+        isLoading: false,
+        error
+      });
+    }
+  }
   }
 
   async getUsers() {
@@ -121,14 +97,20 @@ class UserList extends Component {
       const { limit } = this.state;
 
       const { users } = await getUsers(limit);
-      
-      const user_id = localStorage.getItem('u_id');
 
-      const token = localStorage.getItem('token');
+      let cargas = await axios({ 
+        method: 'Get', 
+        url: 'http://localhost:3000/user/carga/' + localStorage.getItem('u_id'), 
+        headers: {auth: localStorage.getItem('token')}
+      });
+
+      let carga = cargas.data;  
+
       if (this.signal) {
         this.setState({
           isLoading: false,
-          users
+          users,
+          carga
         });
       }
     } catch (error) {
@@ -144,7 +126,11 @@ class UserList extends Component {
   componentDidMount() {
     this.signal = true;
     this.getUsers();
-    this.getCarga();
+    this.gethistorial();
+  }
+
+  componentWillMount(){
+    
   }
 
   componentWillUnmount() {
@@ -157,7 +143,7 @@ class UserList extends Component {
 
   renderUsers() {
     const { classes } = this.props;
-    const { isLoading, users, error } = this.state;
+    const { isLoading, users, error, carga } = this.state;
 
     if (isLoading) {
       return (
@@ -180,30 +166,14 @@ class UserList extends Component {
         //
         onSelect={this.handleSelect}
         users={users}
+        carga={carga}
       />
     );
   }
 
-   renderCarga(){
+   renderHistorial(){
     const { classes } = this.props;
-    const { isLoading, users, error } = this.state;
-    let materias = [];
-
-    try{
-      const response = axios({ 
-        method: 'Get', 
-        url: 'http://localhost:3000/user/carga/' + localStorage.getItem('u_id'), 
-        headers: {auth: localStorage.getItem('token')}
-      }).then(res => {
-        materias = res.data;
-      });
-    }catch(error){
-      console.log(error);
-    }
-
-    /*if(localStorage.getItem('u_id') == '2'){
-      materias = this.state.carga;
-    }*/
+    const { isLoading, users, error, historial } = this.state;
 
     if (isLoading) {
       return (
@@ -217,50 +187,16 @@ class UserList extends Component {
       return <Typography variant="h6">{error}</Typography>;
     }
 
-    if (materias.length === 0) {
-      return <Typography variant="h6">Este usuario aun no posee carga</Typography>;
+    if (users.length === 0) {
+      return <Typography variant="h6">There are no users</Typography>;
     }
 
     return (
       <UsersTable
         //
         onSelect={this.handleSelect}
-        users={materias}
-      />
-    );
-  }
-
-  renderHistorial() {
-    const { classes } = this.props;
-    const { isLoading, users, error } = this.state;
-
-    let historia = [];
-
-    if(localStorage.getItem('u_id') == '2'){
-      historia = this.state.historial;
-    }
-
-    if (isLoading) {
-      return (
-        <div className={classes.progressWrapper}>
-          <CircularProgress />
-        </div>
-      );
-    }
-
-    if (error) {
-      return <Typography variant="h6">{error}</Typography>;
-    }
-
-    if (historia.length === 0) {
-      return <Typography variant="h6">Este usuario aun no posee historial</Typography>;
-    }
-
-    return (
-      <UsersTable
-        //
-        onSelect={this.handleSelect}
-        users={historia}
+        users={users}
+        carga={historial}
       />
     );
   }
@@ -273,9 +209,15 @@ class UserList extends Component {
       <DashboardLayout title="Datos academicos">
         <div className={classes.root}>
           <h1>Carga Actual</h1>
-          <div className={classes.content}>{this.renderCarga()}</div>
+          <div 
+            className={classes.content}
+          >
+            {this.renderUsers()}
+          </div>
           <h1>Historial academico</h1>
-          <div className={classes.content}>{this.renderHistorial()}</div>
+          <div className={classes.content}>
+            {this.renderHistorial()}
+          </div>
         </div>
       </DashboardLayout>
     );

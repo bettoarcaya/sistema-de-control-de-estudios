@@ -14,6 +14,9 @@ import SignIn from './views/SignIn';
 import UnderDevelopment from './views/UnderDevelopment';
 import NotFound from './views/NotFound';
 
+import CargarMaterias from './views/CargarMaterias';
+import CargarNotas from './views/CargarNotas';
+
 export default class Routes extends Component {
   render() {
     return (
@@ -77,6 +80,16 @@ export default class Routes extends Component {
           component={NotFound}
           exact
           path="/not-found"
+        />
+        <Route
+          component={CargarMaterias}
+          exact
+          path="/materias"
+        />
+        <Route
+          component={CargarNotas}
+          exact
+          path="/lista/:codigo"
         />
         <Redirect to="/not-found" />
       </Switch>

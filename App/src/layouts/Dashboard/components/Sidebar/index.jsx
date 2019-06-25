@@ -102,7 +102,7 @@ class Sidebar extends Component {
             activeClassName={classes.activeListItem}
             className={classes.listItem}
             component={NavLink}
-            to="/users"
+            to="/account"
           >
             <ListItemIcon className={classes.listItemIcon}>
               <PeopleIcon />
@@ -136,7 +136,7 @@ class Sidebar extends Component {
             activeClassName={classes.activeListItem}
             className={classes.listItem}
             component={NavLink}
-            to="/users"
+            to="/materias"
           >
             <ListItemIcon className={classes.listItemIcon}>
               <PeopleIcon />

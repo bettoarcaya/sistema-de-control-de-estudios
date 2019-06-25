@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 // Externals
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 
 // Material helpers
 import { withStyles } from '@material-ui/core';
@@ -24,28 +25,29 @@ import styles from './styles';
 
 const states = [
   {
-    value: 'alabama',
-    label: 'Alabama'
+    value: 'ESTUDIANTE',
+    label: 'Estudiante'
   },
   {
-    value: 'new-york',
-    label: 'New York'
+    value: 'ADMIN',
+    label: 'Admin'
   },
   {
-    value: 'san-francisco',
-    label: 'San Francisco'
+    value: 'PROFESOR',
+    label: 'Profesor'
   }
 ];
 
+let state = {
+  firstName: '',
+  lastName: '',
+  email: '',
+  ced: '',
+  tip: '',
+};
+
 class Account extends Component {
-  state = {
-    firstName: 'John',
-    lastName: 'Doe',
-    email: 'contact@devias.io',
-    phone: '',
-    state: 'Alabama',
-    country: 'USA'
-  };
+  
 
   handleChange = e => {
     this.setState({
@@ -53,9 +55,31 @@ class Account extends Component {
     });
   };
 
+  handleGuardar(){
+    let formulario = document.getElementById('formulario');
+    state.firstName = formulario.getElementsByTagName('input')[0].value;
+    state.lastName = formulario.getElementsByTagName('input')[1].value;
+    state.email = formulario.getElementsByTagName('input')[2].value;
+    state.ced = formulario.getElementsByTagName('input')[3].value;
+    state.tip = formulario.getElementsByTagName('input')[4].value;
+
+    let response = axios({ 
+      method: 'POST', 
+      url: 'http://localhost:3000/user/', 
+      headers: {auth: localStorage.getItem('token')}, 
+      data: { state } 
+    }).then(res => {
+      console.log("response", res);
+      alert(res.data);
+    }).catch(error => {
+      console.log("error", error);
+    });
+    
+  }
+
   render() {
     const { classes, className, ...rest } = this.props;
-    const { firstName, lastName, phone, state, country, email } = this.state;
+    //const { firstName, lastName, phone, state, country, email } = this.state;
 
     const rootClassName = classNames(classes.root, className);
 
@@ -66,78 +90,54 @@ class Account extends Component {
       >
         <PortletHeader>
           <PortletLabel
-            subtitle="The information can be edited"
-            title="Profile"
+            subtitle=""
+            title="Agregar usuarios"
           />
         </PortletHeader>
         <PortletContent noPadding>
           <form
-            autoComplete="off"
-            noValidate
+            autoComplete="on"
+            id='formulario'
           >
             <div className={classes.field}>
               <TextField
                 className={classes.textField}
-                helperText="Please specify the first name"
-                label="First name"
+                helperText="Por favor agregue el nombre"
+                label="nombre"
                 margin="dense"
                 required
-                value={firstName}
                 variant="outlined"
               />
               <TextField
                 className={classes.textField}
-                label="Last name"
+                label="apellido"
                 margin="dense"
                 required
-                value={lastName}
                 variant="outlined"
               />
             </div>
             <div className={classes.field}>
               <TextField
                 className={classes.textField}
-                label="Email Address"
+                label="Correo"
                 margin="dense"
                 required
-                value={email}
                 variant="outlined"
               />
               <TextField
                 className={classes.textField}
-                label="Phone Number"
+                label="Cedula"
                 margin="dense"
                 type="number"
-                value={phone}
                 variant="outlined"
               />
             </div>
             <div className={classes.field}>
-              <TextField
+            <TextField
                 className={classes.textField}
-                label="Select State"
+                label="tipo de usuario"
                 margin="dense"
-                onChange={this.handleChange}
-                required
-                select
-                SelectProps={{ native: true }}
-                value={state}
-                variant="outlined">
-                {states.map(option => (
-                  <option
-                    key={option.value}
-                    value={option.value}
-                  >
-                    {option.label}
-                  </option>
-                ))}
-              </TextField>
-              <TextField
-                className={classes.textField}
-                label="Country"
-                margin="dense"
-                required
-                value={country}
+                type="text"
                 variant="outlined"
               />
             </div>
@@ -147,8 +147,9 @@ class Account extends Component {
           <Button
             color="primary"
             variant="contained"
+            onClick={this.handleGuardar}
           >
-            Save details
+            Guardar
           </Button>
         </PortletFooter>
       </Portlet>

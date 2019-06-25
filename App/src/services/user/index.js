@@ -1,6 +1,8 @@
 // Mock data
 import users from 'data/users';
 import orders from 'data/orders';
+import axios from 'axios';
+
 
 function lookupUser(user) {
   const userCopy = JSON.parse(JSON.stringify(user));

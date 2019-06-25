@@ -1,6 +1,5 @@
 import {Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn, ManyToOne, OneToMany, ManyToMany} from "typeorm";
 import { User } from "./User";
-import { Historico } from "./Historico";
 import { Carrera } from "./Carrera";
 import { Pensum } from "./Pensum";
 import { Periodo } from "./Periodo";
@@ -38,8 +37,5 @@ export class Programacion {
 
     @ManyToOne(type => User, user => user.estudiante_id)
     estudiante: User;
-
-    @OneToMany(type => Historico, hist => hist.programacion)
-    prog_id: Programacion;
 
 }

@@ -4,6 +4,7 @@ import * as bcrypt from "bcryptjs";
 import { Programacion } from "./Programacion";
 import { Data_estudiantil } from "./Data_estudiantil";
 import { Historial_documento } from "./Historial_documento";
+import { Pensum } from "./Pensum";
   
   @Entity()
   @Unique(["email"])
@@ -47,6 +48,9 @@ import { Historial_documento } from "./Historial_documento";
 
     @OneToMany(type => Programacion, prog => prog.profesor)
     prof_id: User;
+
+    @OneToMany(type => Pensum, pems => pems.profesor)
+    profe_id: User;
 
     @OneToMany(type => Programacion, prog => prog.estudiante)
     estudiante_id: User;

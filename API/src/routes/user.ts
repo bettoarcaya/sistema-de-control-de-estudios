@@ -29,6 +29,26 @@ import { Router } from "express";
     UserController.getHistorialById
   );
 
+  //obtener el historial del estudiante
+  router.get(
+    "/materias/:id([0-9]+)",
+    [checkJwt, checkRole(["PROFESOR"])],
+    UserController.getMateriasById
+  );
+
+  //obtener el historial del estudiante
+  router.get(
+    "/lista/:codigo",
+    [checkJwt, checkRole(["PROFESOR"])],
+    UserController.getListaByCodigo
+  );
+
+  router.post(
+    "/guardar", 
+    [checkJwt, checkRole(["PROFESOR"])],
+    UserController.guardarNotas
+  )
+
   //Create a new user
   router.post("/", [checkJwt, checkRole(["ADMIN"])], UserController.newUser);
 

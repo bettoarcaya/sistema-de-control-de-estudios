@@ -14,7 +14,9 @@ import { withStyles } from '@material-ui/core';
 import {
   Avatar,
   Checkbox,
+  Button,
   Table,
+  TextField,
   TableBody,
   TableCell,
   TableHead,
@@ -31,8 +33,9 @@ import { Portlet, PortletContent } from 'components';
 
 // Component styles
 import styles from './styles';
+import axios from 'axios';
 
-class UsersTable extends Component {
+class EstudiantesTable extends Component {
   state = {
     selectedUsers: [],
     rowsPerPage: 10,
@@ -88,23 +91,41 @@ class UsersTable extends Component {
     this.setState({ rowsPerPage: event.target.value });
   };
 
+  async handleGuardar(){
+      let forma = document.getElementById('forma');
+      let notas = [];
+      for (let index = 0; index < forma.getElementsByTagName('input').length; index++) {
+        notas[forma.getElementsByTagName('input')[index].name]= forma.getElementsByTagName('input')[index].value;
+            
+      }
+
+     let response = await axios({ 
+        method: 'POST', 
+        url: 'http://localhost:3000/user/guardar', 
+        headers: {auth: localStorage.getItem('token')}, 
+        data: { notas } 
+      });
+  }
+
   render() {
     const { classes, className, users, carga } = this.props;
     const { activeTab, selectedUsers, rowsPerPage, page } = this.state;
 
     const rootClassName = classNames(classes.root, className);
     
+    console.log("notas", carga);
+
     return (
       <Portlet className={rootClassName}>
+          <form id="forma">
         <PortletContent noPadding>
           <PerfectScrollbar>
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell align="left">codigo</TableCell>
-                  <TableCell align="left">materia</TableCell>
-                  <TableCell align="left">seccion</TableCell>
-                  <TableCell align="left">estatus</TableCell>
+                  <TableCell align="left">cedula</TableCell>
+                  <TableCell align="left">nombre</TableCell>
+                  <TableCell align="left">apellido</TableCell>
                   <TableCell align="left">nota</TableCell>
                 </TableRow>
               </TableHead>
@@ -136,22 +157,20 @@ class UsersTable extends Component {
                               className={classes.nameText}
                               variant="body1"
                             >
-                              {user.codigo_materia.cod_materia}
+                              {user.estudiante.cedula}
                             </Typography>
                           </Link>
                         </div>
                       </TableCell>
                       <TableCell className={classes.tableCell}>
-                        {user.codigo_materia.nombre_materia}
+                        {user.estudiante.nombre}
                       </TableCell>
                       <TableCell className={classes.tableCell}>
-                        {user.periodo.nombre}
+                        {user.estudiante.apellido}
                       </TableCell>
                       <TableCell className={classes.tableCell}>
-                        {user.estatus}
-                      </TableCell>
-                      <TableCell className={classes.tableCell}>
-                        {user.nota}
+                        <input type="number" max="10" min="0" name={user.estudiante.cedula}/>
+                        
                       </TableCell>
                     </TableRow>
                   ))}
@@ -159,12 +178,23 @@ class UsersTable extends Component {
             </Table>
           </PerfectScrollbar>
         </PortletContent>
+            <Button
+                className={classes.signInButton}
+                color="primary"
+                onClick={this.handleGuardar}
+                size="large"
+                variant="contained"
+            >
+                Guardar
+            </Button>
+        </form>
       </Portlet>
+      
     );
   }
 }
 
-UsersTable.propTypes = {
+EstudiantesTable.propTypes = {
   className: PropTypes.string,
   classes: PropTypes.object.isRequired,
   onSelect: PropTypes.func,
@@ -172,10 +202,10 @@ UsersTable.propTypes = {
   users: PropTypes.array.isRequired
 };
 
-UsersTable.defaultProps = {
+EstudiantesTable.defaultProps = {
   users: [],
   onSelect: () => {},
   onShowDetails: () => {}
 };
 
-export default withStyles(styles)(UsersTable);
+export default withStyles(styles)(EstudiantesTable);

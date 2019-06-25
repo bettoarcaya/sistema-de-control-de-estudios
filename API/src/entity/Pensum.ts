@@ -1,5 +1,6 @@
-import {Entity, PrimaryGeneratedColumn, Column, OneToMany} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne} from "typeorm";
 import { Programacion } from "./Programacion";
+import { User } from "./User";
 
 @Entity()
 export class Pensum {
@@ -15,5 +16,8 @@ export class Pensum {
 
     @Column()
     nombre_materia: string;
+
+    @ManyToOne(type => User, user => user.profe_id)
+    profesor: User;
 
 }

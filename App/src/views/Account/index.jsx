@@ -29,21 +29,12 @@ class Account extends Component {
     const { classes } = this.props;
 
     return (
-      <DashboardLayout title="Account">
+      <DashboardLayout title="Agregar usuarios">
         <div className={classes.root}>
           <Grid
             container
             spacing={4}
           >
-            <Grid
-              item
-              lg={4}
-              md={6}
-              xl={4}
-              xs={12}
-            >
-              <AccountProfile />
-            </Grid>
             <Grid
               item
               lg={8}

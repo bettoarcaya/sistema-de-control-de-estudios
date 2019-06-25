@@ -32,7 +32,7 @@ import { Portlet, PortletContent } from 'components';
 // Component styles
 import styles from './styles';
 
-class UsersTable extends Component {
+class MateriasTable extends Component {
   state = {
     selectedUsers: [],
     rowsPerPage: 10,
@@ -104,8 +104,6 @@ class UsersTable extends Component {
                   <TableCell align="left">codigo</TableCell>
                   <TableCell align="left">materia</TableCell>
                   <TableCell align="left">seccion</TableCell>
-                  <TableCell align="left">estatus</TableCell>
-                  <TableCell align="left">nota</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -131,27 +129,21 @@ class UsersTable extends Component {
                     >
                       <TableCell className={classes.tableCell}>
                         <div className={classes.tableCellInner}>
-                          <Link to="#">
+                          <Link to={'/lista/'+user.cod_materia}>
                             <Typography
                               className={classes.nameText}
                               variant="body1"
                             >
-                              {user.codigo_materia.cod_materia}
+                              {user.cod_materia}
                             </Typography>
                           </Link>
                         </div>
                       </TableCell>
                       <TableCell className={classes.tableCell}>
-                        {user.codigo_materia.nombre_materia}
+                        {user.nombre_materia}
                       </TableCell>
                       <TableCell className={classes.tableCell}>
-                        {user.periodo.nombre}
-                      </TableCell>
-                      <TableCell className={classes.tableCell}>
-                        {user.estatus}
-                      </TableCell>
-                      <TableCell className={classes.tableCell}>
-                        {user.nota}
+                        {user.id_pensum}
                       </TableCell>
                     </TableRow>
                   ))}
@@ -164,7 +156,7 @@ class UsersTable extends Component {
   }
 }
 
-UsersTable.propTypes = {
+MateriasTable.propTypes = {
   className: PropTypes.string,
   classes: PropTypes.object.isRequired,
   onSelect: PropTypes.func,
@@ -172,10 +164,10 @@ UsersTable.propTypes = {
   users: PropTypes.array.isRequired
 };
 
-UsersTable.defaultProps = {
+MateriasTable.defaultProps = {
   users: [],
   onSelect: () => {},
   onShowDetails: () => {}
 };
 
-export default withStyles(styles)(UsersTable);
+export default withStyles(styles)(MateriasTable);

@@ -25,7 +25,7 @@ class Dashboard extends Component {
     if(localStorage.getItem('isAuthenticated') === 'false'){
       window.location="http://localhost:3006/sign-in";
     }
-    console.log(this.props);
+    //console.log(this.props);
     this.getInfo();
 
     const isMobile = ['xs', 'sm', 'md'].includes(props.width);
@@ -46,7 +46,8 @@ class Dashboard extends Component {
         url: 'http://localhost:3000/user/' + localStorage.getItem('u_id'), 
         headers: {auth: localStorage.getItem('token')}
       })
-      console.log("response", res.data);
+      
+      console.log("props", this.props);
       this.state.tipo_usuario = res.data.tipo_usuario;
       this.state.nombre = res.data.nombre + " " + res.data.apellido;
       this.state.apellido = res.data.apellido;
@@ -54,8 +55,6 @@ class Dashboard extends Component {
     }catch(error){
       console.log("error: " + error);
     }
-
-    console.log(this.state);
   }
 
   handleClose = () => {

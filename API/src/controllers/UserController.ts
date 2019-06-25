@@ -5,7 +5,7 @@ import { validate } from "class-validator";
 import { User } from "../entity/User";
 import { Programacion } from "../entity/Programacion";
 import { Data_estudiantil } from "../entity/Data_estudiantil";
-import { Historico } from "../entity/Historico";
+import { Pensum } from "../entity/Pensum";
 
 class UserController{
 
@@ -38,14 +38,15 @@ class UserController{
 
   static newUser = async (req: Request, res: Response) => {
     //Get parameters from the body
-    let { name, lastname, email, idNumber, password, role } = req.body;
+    let { firstName, lastName, email, ced, tip } = req.body.state;
     let user = new User();
-    user.nombre = name;
-    user.apellido = lastname;
-    user.cedula = idNumber;
+    user.nombre = firstName;
+    user.apellido = lastName;
+    user.cedula = ced;
     user.email = email;
-    user.password = password;
-    user.tipo_usuario = role;
+    user.password = 'password';
+    user.tipo_usuario = tip.toUpperCase();
+    user.estatus = 'inactivo';
 
     //Validade if the parameters are ok
     const errors = await validate(user);
@@ -138,7 +139,8 @@ class UserController{
         relations: ["periodo", "codigo_materia", "carrera", "profesor", "estudiante"],
       });
       
-      res.status(200).send(carga);
+      
+      res.status(200).json(carga);
     } catch (error) {
       res.status(404).send("Este usuario no tiene carga aun");
     }
@@ -166,6 +168,47 @@ class UserController{
       res.status(404).send("Este usuario no tiene historial aun");
     }
   };
+
+  static getMateriasById = async (req: Request, res: Response) => {
+    
+    const id: number = req.params.id;
+    const materiasRepository = getRepository(Pensum);
+
+    try{
+      const materias = await materiasRepository.find({ 
+        where: { profesor:  id }
+      });
+
+      res.status(200).json(materias);
+    }catch(error){
+      res.status(404).send("no tiene ninguna materia cargada");
+    }
+  };
+
+  static getListaByCodigo = async (req: Request, res: Response) => {
+    const codigo: number = req.params.codigo;
+    const materiasRepository = getRepository(Pensum);
+    const cargaRepository = getRepository(Programacion);
+
+    try{
+      const materia = await materiasRepository.find({
+        where: { cod_materia: codigo }
+      });
+      const carga = await cargaRepository.find({
+        where: { codigo_materia: materia[0].id_pensum, estatus: "ENCURSO" },
+        relations: ["periodo", "codigo_materia", "carrera", "profesor", "estudiante"]
+      });
+      res.status(200).json(carga);
+    }catch(error){
+      
+    }
+  };
+
+  static guardarNotas = async (req: Request, res: Response) => {
+    let { notas } = req.body;
+    res.status(200).json(notas);
+  };
+  
 };
 
 export default UserController;
