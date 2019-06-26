@@ -205,8 +205,15 @@ class UserController{
   };
 
   static guardarNotas = async (req: Request, res: Response) => {
-    let { notas } = req.body;
-    res.status(200).json(notas);
+    
+    try{
+      let notas = req.body;
+      res.send(notas);
+    }catch(error){
+
+      res.send(error);
+    }
+    
   };
   
 };
