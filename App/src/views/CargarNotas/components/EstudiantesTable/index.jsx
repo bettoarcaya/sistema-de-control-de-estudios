@@ -91,7 +91,7 @@ class EstudiantesTable extends Component {
     this.setState({ rowsPerPage: event.target.value });
   };
 
-  async handleGuardar(){
+  handleGuardar(){
       let forma = document.getElementById('forma');
       let notas = [];
       for (let index = 0; index < forma.getElementsByTagName('input').length; index++) {
@@ -99,12 +99,21 @@ class EstudiantesTable extends Component {
             
       }
 
-     let response = await axios({ 
+      alert("enviando");
+      alert(localStorage.getItem('token'));
+      console.log(notas);
+     /*axios({ 
         method: 'POST', 
         url: 'http://localhost:3000/user/guardar', 
         headers: {auth: localStorage.getItem('token')}, 
         data: { notas } 
-      });
+      }).then(res => {
+        alert("completada");
+        console.log("response", res.data);
+      }).catch(error => {
+        console.log(error)
+        alert("error al cargar la nota");
+      });*/
   }
 
   render() {
