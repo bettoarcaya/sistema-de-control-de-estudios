@@ -39,7 +39,7 @@ class EstudiantesTable extends Component {
   state = {
     selectedUsers: [],
     rowsPerPage: 10,
-    page: 0
+    page: 0,
   };
 
   handleSelectAll = event => {
@@ -94,26 +94,28 @@ class EstudiantesTable extends Component {
   handleGuardar(){
       let forma = document.getElementById('forma');
       let notas = [];
+      //let id_prog = forma.getElementById('id').value;
+      //console.log("carga_id", id_prog);
       for (let index = 0; index < forma.getElementsByTagName('input').length; index++) {
-        notas[forma.getElementsByTagName('input')[index].name]= forma.getElementsByTagName('input')[index].value;
-            
+        let ind = forma.getElementsByTagName('input')[index].name;
+        let val = forma.getElementsByTagName('input')[index].value;
+
+        notas[index] = { ced: ind, not: val }
       }
 
-      alert("enviando");
-      alert(localStorage.getItem('token'));
-      console.log(notas);
-     /*axios({ 
+     console.log(notas);
+     axios({ 
         method: 'POST', 
         url: 'http://localhost:3000/user/guardar', 
         headers: {auth: localStorage.getItem('token')}, 
-        data: { notas } 
+        data: notas
       }).then(res => {
         alert("completada");
         console.log("response", res.data);
       }).catch(error => {
         console.log(error)
         alert("error al cargar la nota");
-      });*/
+      });
   }
 
   render() {
@@ -126,7 +128,7 @@ class EstudiantesTable extends Component {
 
     return (
       <Portlet className={rootClassName}>
-          <form id="forma">
+          <div id="forma">
         <PortletContent noPadding>
           <PerfectScrollbar>
             <Table>
@@ -196,7 +198,7 @@ class EstudiantesTable extends Component {
             >
                 Guardar
             </Button>
-        </form>
+        </div>
       </Portlet>
       
     );
