@@ -208,10 +208,26 @@ class UserController{
     
     try{
       let notas = req.body;
-      res.send(notas);
+      let cargaRepository = getRepository(Programacion);
+      let userRepository = getRepository(User);
+      let user;
+
+
+      for (let index = 0; index < notas.length; index++) {
+        let cedula = notas[index].ced;
+        user = userRepository.find({
+          where: { cedula: cedula }
+        });
+
+        
+      }
+
+      res.send(notas[0].ced);
+
+      //res.status(200).send("Notas guardas correctamente");
     }catch(error){
 
-      res.send(error);
+      res.send("error al cargar las notas");
     }
     
   };
